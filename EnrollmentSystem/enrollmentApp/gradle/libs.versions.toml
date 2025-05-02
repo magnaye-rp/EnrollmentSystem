@@ -10,6 +10,7 @@ navigationFragment = "2.6.0"
 navigationUi = "2.6.0"
 kotlin = "2.1.20"
 coreKtx = "1.16.0"
+gridlayout = "1.1.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -21,6 +22,7 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "gridlayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
