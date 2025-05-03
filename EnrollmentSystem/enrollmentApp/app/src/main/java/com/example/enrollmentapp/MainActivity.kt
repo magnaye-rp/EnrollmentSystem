@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity() {
         val studentId = intent.getStringExtra("student_id") ?: "1"
         val studentName = intent.getStringExtra("student_name")
 
-        Toast.makeText(this, "Welcome $studentName!", Toast.LENGTH_LONG).show()
-
         // Set RecyclerView LayoutManager
         binding.recyclerViewCourses.layoutManager = LinearLayoutManager(this@MainActivity)
         binding.recyclerViewSchedule.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -47,6 +45,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener {
             val intent = Intent(this@MainActivity, EnrollmentActivity::class.java)
+            intent.putExtra("student_id", studentId)
+            intent.putExtra("student_name", studentName)
             startActivity(intent)
         }
         // swipe up to refresh

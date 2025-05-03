@@ -6,7 +6,6 @@ import android.widget.Toast
 import com.example.enrollmentapp.MainActivity
 import com.example.enrollmentapp.databinding.ActivityEnrollmentBinding
 import androidx.appcompat.app.AppCompatActivity
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 
 class EnrollmentActivity : AppCompatActivity() {
@@ -19,12 +18,11 @@ class EnrollmentActivity : AppCompatActivity() {
         val student_id = intent.getStringExtra("student_id")
         val student_name = intent.getStringExtra("student_name")
 
-        Toast.makeText(this, "Welcome $student_name!", Toast.LENGTH_LONG).show()
-
         binding = ActivityEnrollmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //swipe up refresh
-
-
+        binding.button2.setOnClickListener{
+            val intent = Intent(this@EnrollmentActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
