@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.example.enrollmentapp.MainActivity
 import com.example.enrollmentapp.databinding.ActivityEnrollmentBinding
 import androidx.appcompat.app.AppCompatActivity
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 
 class EnrollmentActivity : AppCompatActivity() {
@@ -22,8 +23,8 @@ class EnrollmentActivity : AppCompatActivity() {
 
         binding = ActivityEnrollmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //swipe up refresh
 
-        // Button click listener
 
     }
 }

@@ -7,8 +7,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class EnrollmentAdapter extends RecyclerView.Adapter<EnrollmentAdapter.ViewHolder> {
     private List<Enrollment> enrollmentList;
@@ -53,16 +56,23 @@ public class EnrollmentAdapter extends RecyclerView.Adapter<EnrollmentAdapter.Vi
         return enrollmentList.size();
     }
 
-    // Format the date to a more readable format
-    private String formatDate(String date) {
+    public static String formatDate(String dateStr) {
         try {
-            // Example format: 2025-04-30 -> 04/30/2025
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
-            return outputFormat.format(inputFormat.parse(date));
-        } catch (Exception e) {
+            // Input format example: "Wed, 30 Apr 2025 00:00:00 GMT"
+            String inputPattern = "EEE, dd MMM yyyy HH:mm:ss zzz";
+            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.ENGLISH);
+
+            // Desired output format
+            String outputPattern = "MMMM dd, yyyy"; // e.g., April 30, 2025
+            SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.ENGLISH);
+
+            Date date = inputFormat.parse(dateStr);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
             e.printStackTrace();
-            return date; // Return original date in case of parsing error
+            return dateStr; // Return the original string if parsing fails
         }
     }
+
+
 }
