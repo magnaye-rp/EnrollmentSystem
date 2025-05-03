@@ -44,8 +44,8 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
-        android:layout_width="392dp"
-        android:layout_height="197dp"
+        android:layout_width="395dp"
+        android:layout_height="241dp"
         android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,10 +65,11 @@
     <FrameLayout
         android:layout_width="392dp"
         android:layout_height="208dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6">
 
@@ -88,12 +89,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="123dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="21dp"
         android:layout_marginEnd="119dp"
         android:text="Courses to Enroll"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/swipeRefreshLayout" />
 
@@ -103,10 +105,11 @@
         android:layout_height="60dp"
         android:layout_marginStart="101dp"
         android:layout_marginEnd="101dp"
-        android:layout_marginBottom="83dp"
+        android:layout_marginBottom="52dp"
         android:text="Enroll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
