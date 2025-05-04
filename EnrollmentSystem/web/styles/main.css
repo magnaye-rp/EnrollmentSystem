@@ -1,6 +1,94 @@
-#title_bar {
-  background-color: #333;
-  color: white;
-  padding: 10px;
-  text-align: center;
+/* Global Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
+
+/* Form Container Styling */
+.form-container {
+  background-color: #fff;
+  padding: 40px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Form Title */
+.form-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-title h2 {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.form-title p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Input Group Styling */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Submit Button */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+/* Switch Form Text */
+.switch-form {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.switch-form a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.switch-form a:hover {
+  text-decoration: underline;
+}
+
+

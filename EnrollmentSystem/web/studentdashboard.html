@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Student Dashboard - Online Enrollment Management" />
+    <meta name="keywords" content="HTML, CSS, JavaScript" />
+    <meta name="author" content="student" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/student.css" />
+    <title>Student Dashboard - Online Enrollment Management</title>
+  </head>
+  <body>
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar">
+      <ul>
+        <li><a href="studentdashboard.html" class="active">Dashboard</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="enrollment.html">Enrollment</a></li>
+        <li><a href="payment.html">Payments</a></li>
+        <li><a href="login.html">Logout</a></li>
+      </ul>
+    </aside>
+
+    <div class="student-content">
+      <!-- Top Banner -->
+      <header class="top-banner">
+        <h1>Student Dashboard - Online Enrollment Management</h1>
+      </header>
+
+      <main>
+        <!-- Course Listings Section -->
+        <section id="courseListings" class="section-card">
+          <h2>Course Listings</h2>
+          <div class="course-listing">
+            <div class="course-card">
+              <h3>Introduction to Computer Science</h3>
+              <p>Instructor: Prof. Smith</p>
+              <p>Schedule: Mon/Wed 10:00 - 12:00</p>
+              <p>Available Slots: <span class="slots-left">5</span></p>
+              <button class="enroll-button">Enroll</button>
+            </div>
+            <div class="course-card">
+              <h3>Data Structures</h3>
+              <p>Instructor: Dr. Johnson</p>
+              <p>Schedule: Tue/Thu 13:00 - 15:00</p>
+              <p>Available Slots: <span class="slots-left">2</span></p>
+              <button class="enroll-button">Enroll</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Enrollment Section -->
+        <section id="subjectEnrollment" class="section-card">
+          <h2>Enroll in Courses</h2>
+          <div class="enrollment-form">
+            <label for="courseSelection">Select a course to enroll in:</label>
+            <select id="courseSelection">
+              <option value="CSE101">Introduction to Computer Science</option>
+              <option value="CSE102">Data Structures</option>
+            </select>
+            <button class="submit-button">Enroll Now</button>
+          </div>
+        </section>
+
+        <!-- Payment Section -->
+        <section id="paymentInformation" class="section-card">
+          <h2>Payment Information</h2>
+          <div class="payment-form">
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod">
+              <option value="bank">Bank Transfer</option>
+              <option value="cash">Cash</option>
+            </select>
+
+            <label for="receipt">Upload Payment Receipt (if any):</label>
+            <input type="file" id="receipt" name="receipt" />
+
+            <button class="submit-button">Submit Payment</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Online Enrollment Management</p>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
