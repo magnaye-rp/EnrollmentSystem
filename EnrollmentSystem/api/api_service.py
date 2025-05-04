@@ -56,6 +56,7 @@ def student_login():
         db.close()
         return jsonify({"message": "Database query failed!"}), 500
 
+#Admin Login
 @app.route('/login', methods=['POST'])
 def admin_login():
     data = request.get_json()
