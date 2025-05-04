@@ -3,6 +3,7 @@ package com.example.enrollmentapp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,22 +13,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class AddedCourseAdapter extends ListAdapter<Course, AddedCourseAdapter.CourseViewHolder> {
 
-    public AddedCourseAdapter() {
+    // Create an interface for the cancel button click
+    public interface OnCancelClickListener {
+        void onCancelClick(Course course);
+    }
+
+    private final OnCancelClickListener onCancelClickListener;
+
+    // Constructor where you pass the listener
+    public AddedCourseAdapter(OnCancelClickListener onCancelClickListener) {
         super(new CourseDiffCallback());
+        this.onCancelClickListener = onCancelClickListener;
     }
 
     public static class CourseViewHolder extends RecyclerView.ViewHolder {
         TextView name;
+        TextView sched;
+        Button cancelButton; // Reference to the cancel button
 
         public CourseViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.courseName);
+            name = itemView.findViewById(R.id.addCourseName);
+            sched = itemView.findViewById(R.id.addedSchedule);
+            cancelButton = itemView.findViewById(R.id.cancelButton); // Bind the cancel button
         }
     }
+
     private static class CourseDiffCallback extends DiffUtil.ItemCallback<Course> {
         @Override
         public boolean areItemsTheSame(Course oldItem, Course newItem) {
-            return false; // Force RecyclerView to treat each as new
+            return oldItem.getCourseId() == newItem.getCourseId();
         }
 
         @Override
@@ -46,6 +61,19 @@ public class AddedCourseAdapter extends ListAdapter<Course, AddedCourseAdapter.C
 
     @Override
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
-        holder.name.setText(getItem(position).getCourseName()); // Use getItem() to access the course
+        Course course = getItem(position);
+        holder.name.setText(course.getCourseName());
+
+        String schedule = course.getScheduleDay() + " " + course.getScheduleTime();
+        holder.sched.setText(schedule);
+
+        // Set up the cancel button click listener
+        holder.cancelButton.setOnClickListener(v -> {
+            // Trigger the cancel action through the listener
+            if (onCancelClickListener != null) {
+                onCancelClickListener.onCancelClick(course);
+            }
+        });
     }
 }
+

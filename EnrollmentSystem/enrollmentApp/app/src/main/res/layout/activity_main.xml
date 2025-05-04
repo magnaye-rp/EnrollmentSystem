@@ -17,14 +17,12 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="0dp"
+        android:layout_width="393dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginTop="28dp"
         android:text="Enrollment View"
         android:textAlignment="center"
         android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar4" />
@@ -33,25 +31,24 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="107dp"
-        android:layout_marginEnd="108dp"
-        android:layout_marginBottom="11dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="109dp"
         android:text="Your Current Enrollments"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/swipeRefreshLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="392dp"
         android:layout_height="191dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        android:layout_marginTop="11dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCourses"
@@ -66,9 +63,10 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeSchedLayout"
-        android:layout_width="393dp"
-        android:layout_height="277dp"
+        android:layout_width="392dp"
+        android:layout_height="234dp"
         android:layout_marginTop="23dp"
+        android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
@@ -89,36 +87,57 @@
         android:layout_width="316dp"
         android:layout_height="48dp"
         android:layout_marginStart="38dp"
-        android:layout_marginEnd="39dp"
+        android:layout_marginTop="38dp"
         android:layout_marginBottom="40dp"
         android:text="Enroll Course"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipeSchedLayout" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="108dp"
         android:layout_height="22dp"
         android:layout_marginStart="142dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="143dp"
-        android:layout_marginBottom="23dp"
         android:text="Your Schedule"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/swipeSchedLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipeRefreshLayout"
         tools:textSize="16sp" />
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar4"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_width="396dp"
+        android:layout_height="99dp"
+        android:layout_marginEnd="1dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextClock
+            android:id="@+id/textClock"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="334dp"
+            tools:layout_marginTop="70dp"
+            tools:layout_editor_absoluteY="100dp" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_marginTop="48dp"
+            android:text="log out"
+            tools:layout_editor_absoluteX="241dp"
+            tools:layout_editor_absoluteY="100
+            dp" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

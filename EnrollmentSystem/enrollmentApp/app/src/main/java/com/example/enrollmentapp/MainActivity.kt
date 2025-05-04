@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enrollmentapp.databinding.ActivityMainBinding
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 //api service connection
 import okhttp3.*
@@ -49,6 +48,10 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("student_name", studentName)
             startActivity(intent)
         }
+        binding.button4.setOnClickListener {
+            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+
+        }
         // swipe up to refresh
         binding.swipeRefreshLayout.setOnRefreshListener {
             loadCoursesTable(studentId)
@@ -67,7 +70,6 @@ class MainActivity : AppCompatActivity() {
 
         val json = JSONObject()
         json.put("student_id", s_id)
-        Toast.makeText(this@MainActivity, "Student ID: $s_id", Toast.LENGTH_LONG).show()
 
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val body: RequestBody = json.toString().toRequestBody(mediaType)

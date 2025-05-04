@@ -1,63 +1,67 @@
 package com.example.enrollmentapp
 
-import android.app.DownloadManager
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import com.example.enrollmentapp.MainActivity
-import com.example.enrollmentapp.databinding.ActivityEnrollmentBinding
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.Button
-import androidx.lifecycle.ViewModelProvider
-
-
-import android.view.ViewGroup
-import android.widget.TextView
 import android.util.Log
-
-
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.enrollmentapp.AddedCourseAdapter.OnCancelClickListener
+import com.example.enrollmentapp.databinding.ActivityEnrollmentBinding
 import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Request
-import okhttp3.Callback
 import okhttp3.Response
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
-import org.json.JSONArray
 
 
 class EnrollmentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEnrollmentBinding
     private lateinit var viewModel: CoursesViewModel
-    private lateinit var addedCoursesAdapter: AddedCourseAdapter
+    private lateinit var addedCourseAdapter: AddedCourseAdapter
+    private lateinit var availableClassesAdapter: AvailableClassesAdapter
+    private var name = "";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val student_id = intent.getStringExtra("student_id")
         val student_name = intent.getStringExtra("student_name")
+        name = student_name.toString()
 
         binding = ActivityEnrollmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(CoursesViewModel::class.java)
 
-        // Setup adapter and RecyclerViews
-        setupRecyclerViews()
+        // ✅ Initialize adapter with cancel click logic
+        addedCourseAdapter = AddedCourseAdapter(object : OnCancelClickListener {
+            override fun onCancelClick(course: Course) {
+                viewModel.removeCourse(course)
+            }
+        })
+
+        binding.recyclerViewToEnroll.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewToEnroll.adapter = addedCourseAdapter
+
+        binding.recyclerViewUnenrolled.layoutManager = LinearLayoutManager(this)
 
         // Observe added courses
         viewModel.addedCourses.observe(this) { addedCourses ->
             Log.d("EnrollmentActivity", "Observed courses: $addedCourses")
-            addedCoursesAdapter.submitList(addedCourses)
+            addedCourseAdapter.submitList(addedCourses.toList()) {
+                binding.recyclerViewToEnroll.scrollToPosition(0)
+            }
         }
 
         // Load available courses
@@ -81,13 +85,6 @@ class EnrollmentActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupRecyclerViews() {
-        addedCoursesAdapter = AddedCourseAdapter()
-        binding.recyclerViewToEnroll.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewToEnroll.adapter = addedCoursesAdapter
-
-        binding.recyclerViewUnenrolled.layoutManager = LinearLayoutManager(this)
-    }
 
     private fun loadAvailableCourses(s_id: String) {
         val client = OkHttpClient()
@@ -163,6 +160,10 @@ class EnrollmentActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         Toast.makeText(this@EnrollmentActivity, "Enrolled successfully!", Toast.LENGTH_SHORT).show()
                         viewModel.clearCourses()
+                        val intent = Intent(this@EnrollmentActivity, MainActivity::class.java)
+                        intent.putExtra("studentId", s_id)
+                        intent.putExtra("studentName", name)
+                        startActivity(intent)
                     } else {
                         Toast.makeText(this@EnrollmentActivity, "Enroll failed: $responseData", Toast.LENGTH_SHORT).show()
                     }
@@ -181,19 +182,26 @@ data class Course(
 )
 
 class CoursesViewModel : ViewModel() {
-    val addedCourses = MutableLiveData<List<Course>>(listOf())
+    val addedCourses = MutableLiveData<List<Course>>(emptyList())
 
     fun addCourse(course: Course) {
-        val currentList = addedCourses.value ?: listOf()
+        val currentList = addedCourses.value ?: emptyList()
+        if (course !in currentList) {
+            val newList = currentList.toMutableList().apply { add(course) }
+            addedCourses.value = newList
+        }
+    }
+
+    fun removeCourse(course: Course) {
+        val currentList = addedCourses.value ?: emptyList()
         val newList = currentList.toMutableList()
-        newList.add(course)
+        newList.remove(course)
         addedCourses.value = newList
     }
 
     fun clearCourses() {
-        addedCourses.value = mutableListOf()
+        // Reset with an empty immutable List (matching List<Course> type)
+        addedCourses.value = emptyList()
     }
-
 }
-
 

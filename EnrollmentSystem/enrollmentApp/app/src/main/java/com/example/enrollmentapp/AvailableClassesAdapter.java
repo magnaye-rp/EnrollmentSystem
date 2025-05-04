@@ -24,11 +24,14 @@ public class AvailableClassesAdapter extends RecyclerView.Adapter<AvailableClass
     // ViewHolder for each course item
     public static class CourseViewHolder extends RecyclerView.ViewHolder {
         TextView courseName;
+        TextView courseSched;
         Button addButton;
+
 
         public CourseViewHolder(View itemView) {
             super(itemView);
-            courseName = itemView.findViewById(R.id.courseName);
+            courseName = itemView.findViewById(R.id.addCourseName);
+            courseSched = itemView.findViewById(R.id.schedule);
             addButton = itemView.findViewById(R.id.addButton);
         }
     }
@@ -45,6 +48,7 @@ public class AvailableClassesAdapter extends RecyclerView.Adapter<AvailableClass
         Course course = courses.get(position);
         Log.d("AddedCourseAdapter", "Binding course: " + course.getCourseName());
         holder.courseName.setText(course.getCourseName());
+        holder.courseSched.setText(course.getScheduleDay().toLowerCase() + " " + course.getScheduleTime());
 
         // Set up the "Add" button click listener
         holder.addButton.setOnClickListener(v -> {
