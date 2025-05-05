@@ -7,7 +7,8 @@
     <meta name="description" content="Student Dashboard - Online Enrollment Management" />
     <meta name="keywords" content="HTML, CSS, JavaScript" />
     <meta name="author" content="student" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#6366f1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/student.css" />
     <title>Student Dashboard - Online Enrollment Management</title>
@@ -15,79 +16,242 @@
   <body>
     <!-- Sidebar Navigation -->
     <aside id="sidebar">
+      <div class="sidebar-header">
+        <h2><i class="fas fa-graduation-cap"></i> EduPortal</h2>
+      </div>
       <ul>
-        <li><a href="studentdashboard.html" class="active">Dashboard</a></li>
-        <li><a href="courses.html">Courses</a></li>
-        <li><a href="enrollment.html">Enrollment</a></li>
-        <li><a href="payment.html">Payments</a></li>
-        <li><a href="login.html">Logout</a></li>
+        <li>
+          <a href="studentdashboard.html" class="active">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="courses.html">
+            <i class="fas fa-book"></i> Courses
+          </a>
+        </li>
+        <li>
+          <a href="enrollment.html">
+            <i class="fas fa-clipboard-list"></i> Enrollment
+          </a>
+        </li>
+        <li>
+          <a href="payment.html">
+            <i class="fas fa-credit-card"></i> Payments
+          </a>
+        </li>
+        <li class="logout-item">
+          <a href="login.html">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </li>
       </ul>
     </aside>
 
     <div class="student-content">
       <!-- Top Banner -->
       <header class="top-banner">
-        <h1>Student Dashboard - Online Enrollment Management</h1>
+        <div class="header-left">
+          <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1>Student Dashboard</h1>
+        </div>
+        <div class="header-right">
+          <div class="notification-bell">
+            <i class="fas fa-bell"></i>
+            <span class="badge">2</span>
+          </div>
+          <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=John+Doe&background=random" alt="John Doe" />
+            <span>John Doe</span>
+          </div>
+        </div>
       </header>
 
       <main>
+        <!-- Welcome Banner -->
+        <section class="welcome-banner">
+          <div class="welcome-content">
+            <h2>Welcome back, John!</h2>
+            <p>You have 3 active enrollments this semester</p>
+            <button class="btn btn-primary">
+              <i class="fas fa-plus"></i> Enroll in New Course
+            </button>
+          </div>
+          <div class="welcome-stats">
+            <div class="stat-item">
+              <i class="fas fa-book-open"></i>
+              <div>
+                <h3>5</h3>
+                <p>Courses Taken</p>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-check-circle"></i>
+              <div>
+                <h3>12</h3>
+                <p>Credits Earned</p>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-calendar-alt"></i>
+              <div>
+                <h3>3</h3>
+                <p>Upcoming Deadlines</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Course Listings Section -->
         <section id="courseListings" class="section-card">
-          <h2>Course Listings</h2>
+          <div class="section-header">
+            <h2><i class="fas fa-book"></i> Available Courses</h2>
+            <div class="search-box">
+              <input type="text" placeholder="Search courses..." />
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
           <div class="course-listing">
             <div class="course-card">
-              <h3>Introduction to Computer Science</h3>
-              <p>Instructor: Prof. Smith</p>
-              <p>Schedule: Mon/Wed 10:00 - 12:00</p>
-              <p>Available Slots: <span class="slots-left">5</span></p>
-              <button class="enroll-button">Enroll</button>
+              <div class="course-badge">New</div>
+              <div class="course-image" style="background-color: #e1f5fe;">
+                <i class="fas fa-laptop-code" style="color: #0288d1;"></i>
+              </div>
+              <div class="course-content">
+                <h3>Introduction to Computer Science</h3>
+                <div class="course-meta">
+                  <span><i class="fas fa-user-tie"></i> Prof. Smith</span>
+                  <span><i class="fas fa-clock"></i> Mon/Wed 10:00 - 12:00</span>
+                </div>
+                <div class="course-footer">
+                  <div class="slots-info">
+                    <span class="slots-left">5</span> slots remaining
+                  </div>
+                  <button class="btn btn-primary enroll-button">
+                    <i class="fas fa-plus"></i> Enroll
+                  </button>
+                </div>
+              </div>
             </div>
             <div class="course-card">
-              <h3>Data Structures</h3>
-              <p>Instructor: Dr. Johnson</p>
-              <p>Schedule: Tue/Thu 13:00 - 15:00</p>
-              <p>Available Slots: <span class="slots-left">2</span></p>
-              <button class="enroll-button">Enroll</button>
+              <div class="course-image" style="background-color: #e8f5e9;">
+                <i class="fas fa-project-diagram" style="color: #388e3c;"></i>
+              </div>
+              <div class="course-content">
+                <h3>Data Structures</h3>
+                <div class="course-meta">
+                  <span><i class="fas fa-user-tie"></i> Dr. Johnson</span>
+                  <span><i class="fas fa-clock"></i> Tue/Thu 13:00 - 15:00</span>
+                </div>
+                <div class="course-footer">
+                  <div class="slots-info">
+                    <span class="slots-left">2</span> slots remaining
+                  </div>
+                  <button class="btn btn-primary enroll-button">
+                    <i class="fas fa-plus"></i> Enroll
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="course-card">
+              <div class="course-badge">Popular</div>
+              <div class="course-image" style="background-color: #f3e5f5;">
+                <i class="fas fa-globe" style="color: #8e24aa;"></i>
+              </div>
+              <div class="course-content">
+                <h3>Web Development</h3>
+                <div class="course-meta">
+                  <span><i class="fas fa-user-tie"></i> Prof. Williams</span>
+                  <span><i class="fas fa-clock"></i> Fri 09:00 - 12:00</span>
+                </div>
+                <div class="course-footer">
+                  <div class="slots-info">
+                    <span class="slots-left">8</span> slots remaining
+                  </div>
+                  <button class="btn btn-primary enroll-button">
+                    <i class="fas fa-plus"></i> Enroll
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         <!-- Enrollment Section -->
         <section id="subjectEnrollment" class="section-card">
-          <h2>Enroll in Courses</h2>
+          <h2><i class="fas fa-clipboard-list"></i> Quick Enrollment</h2>
           <div class="enrollment-form">
-            <label for="courseSelection">Select a course to enroll in:</label>
-            <select id="courseSelection">
-              <option value="CSE101">Introduction to Computer Science</option>
-              <option value="CSE102">Data Structures</option>
-            </select>
-            <button class="submit-button">Enroll Now</button>
+            <div class="form-group">
+              <label for="courseSelection">Select a course to enroll in:</label>
+              <select id="courseSelection" class="form-control">
+                <option value="">-- Select Course --</option>
+                <option value="CSE101">Introduction to Computer Science</option>
+                <option value="CSE102">Data Structures</option>
+                <option value="CSE201">Web Development</option>
+                <option value="CSE301">Database Systems</option>
+              </select>
+            </div>
+            <button class="btn btn-primary submit-button">
+              <i class="fas fa-check"></i> Enroll Now
+            </button>
           </div>
         </section>
 
         <!-- Payment Section -->
         <section id="paymentInformation" class="section-card">
-          <h2>Payment Information</h2>
+          <h2><i class="fas fa-credit-card"></i> Payment Information</h2>
           <div class="payment-form">
-            <label for="paymentMethod">Payment Method:</label>
-            <select id="paymentMethod">
-              <option value="bank">Bank Transfer</option>
-              <option value="cash">Cash</option>
-            </select>
-
-            <label for="receipt">Upload Payment Receipt (if any):</label>
-            <input type="file" id="receipt" name="receipt" />
-
-            <button class="submit-button">Submit Payment</button>
+            <div class="form-group">
+              <label for="paymentMethod">Payment Method:</label>
+              <select id="paymentMethod" class="form-control">
+                <option value="">-- Select Payment Method --</option>
+                <option value="bank">Bank Transfer</option>
+                <option value="credit">Credit Card</option>
+                <option value="cash">Cash</option>
+                <option value="online">Online Payment</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="receipt">Upload Payment Receipt (if any):</label>
+              <div class="file-upload">
+                <input type="file" id="receipt" name="receipt" />
+                <label for="receipt" class="file-upload-label">
+                  <i class="fas fa-cloud-upload-alt"></i> Choose File
+                </label>
+                <span class="file-name">No file chosen</span>
+              </div>
+            </div>
+            <button class="btn btn-success submit-button">
+              <i class="fas fa-paper-plane"></i> Submit Payment
+            </button>
           </div>
         </section>
       </main>
+
+      <footer>
+        <p>&copy; 2025 Online Enrollment Management System. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#"><i class="fas fa-question-circle"></i> Help Center</a>
+          <a href="#"><i class="fas fa-envelope"></i> Contact Support</a>
+          <a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+        </div>
+      </footer>
     </div>
 
-    <footer>
-      <p>&copy; 2025 Online Enrollment Management</p>
-    </footer>
-
     <script src="scripts/main.js"></script>
+    <script>
+      // File upload display
+      document.getElementById('receipt').addEventListener('change', function(e) {
+        const fileName = e.target.files[0] ? e.target.files[0].name : 'No file chosen';
+        document.querySelector('.file-name').textContent = fileName;
+      });
+      
+      // Menu toggle functionality
+      document.querySelector('.menu-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('sidebar-collapsed');
+      });
+    </script>
   </body>
 </html>
