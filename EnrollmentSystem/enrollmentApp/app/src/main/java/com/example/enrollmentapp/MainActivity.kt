@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enrollmentapp.databinding.ActivityMainBinding
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 //api service connection
 import okhttp3.*
@@ -31,8 +30,6 @@ class MainActivity : AppCompatActivity() {
         val studentId = intent.getStringExtra("student_id") ?: "1"
         val studentName = intent.getStringExtra("student_name")
 
-        Toast.makeText(this, "Welcome $studentName!", Toast.LENGTH_LONG).show()
-
         // Set RecyclerView LayoutManager
         binding.recyclerViewCourses.layoutManager = LinearLayoutManager(this@MainActivity)
         binding.recyclerViewSchedule.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -47,7 +44,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener {
             val intent = Intent(this@MainActivity, EnrollmentActivity::class.java)
+            intent.putExtra("student_id", studentId)
+            intent.putExtra("student_name", studentName)
             startActivity(intent)
+        }
+        binding.button4.setOnClickListener {
+            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+
         }
         // swipe up to refresh
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -67,7 +70,6 @@ class MainActivity : AppCompatActivity() {
 
         val json = JSONObject()
         json.put("student_id", s_id)
-        Toast.makeText(this@MainActivity, "Student ID: $s_id", Toast.LENGTH_LONG).show()
 
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val body: RequestBody = json.toString().toRequestBody(mediaType)
