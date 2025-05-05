@@ -17,9 +17,37 @@
           <label for="username">Username:</label>
           <input type="text" id="username" name="username" required />
         </div>
+<<<<<<< Updated upstream
         <div class="input-group">
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" required />
+=======
+        <form id="loginForm">
+            <!-- Role Selection -->
+            <div class="role-selection">
+                <label for="role">Select Role:</label>
+                <select id="role" name="role" required>
+                    <option value="student">Student</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <!-- Username Field -->
+            <div class="input-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <!-- Password Field -->
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <!-- Login Button -->
+            <button type="submit" class="submit-button">Login</button>
+        </form>
+        <div class="switch-form">
+            <p>Don't have an account? <a href="studentregistraion.html">Create one now</a></p>
+            <p><a href="#">Forgot password?</a></p>
+>>>>>>> Stashed changes
         </div>
         <button type="submit" class="submit-button" onclick="loginApi">
           Login
