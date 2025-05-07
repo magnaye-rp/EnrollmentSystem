@@ -8,13 +8,15 @@
     <meta name="keywords" content="HTML, CSS, JavaScript" />
     <meta name="author" content="admin" />
     <meta name="theme-color" content="#6366f1" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/admin.css" />
     <title>Admin Panel - Online Enrollment Management</title>
   </head>
   <body>
-    <!-- Sidebar -->
     <aside id="sidebar">
       <div class="sidebar-header">
         <h2><i class="fas fa-graduation-cap"></i> EnrollmentSys</h2>
@@ -43,7 +45,10 @@
       </ul>
       <div class="sidebar-footer">
         <div class="user-profile">
-          <img src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" alt="Admin User" />
+          <img
+            src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff"
+            alt="Admin User"
+          />
           <div>
             <h4>Admin User</h4>
             <small>Super Admin</small>
@@ -64,22 +69,16 @@
           <h1>Admin Dashboard</h1>
         </div>
         <div class="header-right">
-          <div class="notification-bell">
-            <i class="fas fa-bell"></i>
-            <span class="badge">3</span>
-          </div>
-          <div class="search-box">
-            <input type="text" placeholder="Search..." />
-            <i class="fas fa-search"></i>
-          </div>
+          <div class="notification-bell"></div>
+          <div class="search-box"></div>
         </div>
       </header>
 
       <main>
         <div class="stats-container">
           <div class="stat-card">
-            <div class="stat-icon" style="background-color: #e1f5fe;">
-              <i class="fas fa-users" style="color: #0288d1;"></i>
+            <div class="stat-icon" style="background-color: #e1f5fe">
+              <i class="fas fa-users" style="color: #0288d1"></i>
             </div>
             <div class="stat-info">
               <h3>1,254</h3>
@@ -87,17 +86,8 @@
             </div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon" style="background-color: #e8f5e9;">
-              <i class="fas fa-chalkboard-teacher" style="color: #388e3c;"></i>
-            </div>
-            <div class="stat-info">
-              <h3>48</h3>
-              <p>Faculty Members</p>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon" style="background-color: #f3e5f5;">
-              <i class="fas fa-book" style="color: #8e24aa;"></i>
+            <div class="stat-icon" style="background-color: #f3e5f5">
+              <i class="fas fa-book" style="color: #8e24aa"></i>
             </div>
             <div class="stat-info">
               <h3>86</h3>
@@ -105,8 +95,8 @@
             </div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon" style="background-color: #fff3e0;">
-              <i class="fas fa-clipboard-list" style="color: #fb8c00;"></i>
+            <div class="stat-icon" style="background-color: #fff3e0">
+              <i class="fas fa-clipboard-list" style="color: #fb8c00"></i>
             </div>
             <div class="stat-info">
               <h3>2,156</h3>
@@ -117,9 +107,9 @@
 
         <section id="userManagement" class="admin-section">
           <div class="section-header">
-            <h3><i class="fas fa-users"></i> User Management</h3>
+            <h3><i class="fas fa-users"></i> Student Management</h3>
             <button class="btn btn-primary">
-              <i class="fas fa-plus"></i> Add New User
+              <i class="fas fa-plus"></i> Add New Student
             </button>
           </div>
           <p>Manage students and staff accounts.</p>
@@ -127,72 +117,85 @@
             <table>
               <thead>
                 <tr>
-                  <th>Username</th>
+                  <th>Student Name</th>
                   <th>Email</th>
                   <th>Role</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>
                     <div class="user-avatar">
-                      <img src="https://ui-avatars.com/api/?name=John+Doe&background=random" alt="John Doe" />
+                      <img
+                        src="https://ui-avatars.com/api/?name=John+Doe&background=random"
+                        alt="John Doe"
+                      />
                       John Doe
                     </div>
                   </td>
                   <td>johndoe@gmail.com</td>
                   <td><span class="badge badge-student">Student</span></td>
-                  <td><span class="badge badge-active">Active</span></td>
                   <td>
-                    <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                    <button class="btn-icon btn-danger"><i class="fas fa-trash"></i></button>
+                    <button class="btn-icon">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn-icon btn-danger">
+                      <i class="fas fa-trash"></i>
+                    </button>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <div class="user-avatar">
-                      <img src="https://ui-avatars.com/api/?name=Jane+Smith&background=random" alt="Jane Smith" />
+                      <img
+                        src="https://ui-avatars.com/api/?name=Jane+Smith&background=random"
+                        alt="Jane Smith"
+                      />
                       Jane Smith
                     </div>
                   </td>
                   <td>janesmith@university.edu</td>
                   <td><span class="badge badge-faculty">Faculty</span></td>
-                  <td><span class="badge badge-active">Active</span></td>
                   <td>
-                    <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                    <button class="btn-icon btn-danger"><i class="fas fa-trash"></i></button>
+                    <button class="btn-icon btn-danger">
+                      <i class="fas fa-trash"></i>
+                    </button>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <div class="user-avatar">
-                      <img src="https://ui-avatars.com/api/?name=Robert+Johnson&background=random" alt="Robert Johnson" />
+                      <img
+                        src="https://ui-avatars.com/api/?name=Robert+Johnson&background=random"
+                        alt="Robert Johnson"
+                      />
                       Robert Johnson
                     </div>
                   </td>
                   <td>rjohnson@admin.edu</td>
                   <td><span class="badge badge-admin">Admin</span></td>
-                  <td><span class="badge badge-inactive">Inactive</span></td>
                   <td>
-                    <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                    <button class="btn-icon btn-danger"><i class="fas fa-trash"></i></button>
+                    <button class="btn-icon btn-danger">
+                      <i class="fas fa-trash"></i>
+                    </button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="table-footer">
-            <div class="pagination-info">
-              Showing 1 to 3 of 15 entries
-            </div>
+            <div class="pagination-info">Showing 1 to 3 of 15 entries</div>
             <div class="pagination-controls">
-              <button class="btn-icon"><i class="fas fa-chevron-left"></i></button>
+              <button class="btn-icon">
+                <i class="fas fa-chevron-left"></i>
+              </button>
               <button class="btn-icon active">1</button>
               <button class="btn-icon">2</button>
               <button class="btn-icon">3</button>
-              <button class="btn-icon"><i class="fas fa-chevron-right"></i></button>
+              <button class="btn-icon">
+                <i class="fas fa-chevron-right"></i>
+              </button>
             </div>
           </div>
         </section>
@@ -209,65 +212,29 @@
             <table>
               <thead>
                 <tr>
-                  <th>Course Code</th>
                   <th>Course Title</th>
-                  <th>Instructor</th>
-                  <th>Schedule</th>
-                  <th>Enrolled</th>
+                  <th>Schedule Time</th>
+                  <th>Schedule Day</th>
+                  <th>Capacity</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>CSE101</td>
-                  <td>Introduction to Computer Science</td>
-                  <td>
-                    <div class="user-avatar small">
-                      <img src="https://ui-avatars.com/api/?name=Prof+Smith&background=random" alt="Prof. Smith" />
-                      Prof. Smith
-                    </div>
-                  </td>
-                  <td>Mon/Wed 10:00 - 12:00</td>
-                  <td>45/50</td>
-                  <td>
-                    <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                    <button class="btn-icon btn-danger"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>MTH202</td>
-                  <td>Advanced Calculus</td>
-                  <td>
-                    <div class="user-avatar small">
-                      <img src="https://ui-avatars.com/api/?name=Dr+Johnson&background=random" alt="Dr. Johnson" />
-                      Dr. Johnson
-                    </div>
-                  </td>
-                  <td>Tue/Thu 13:00 - 15:00</td>
-                  <td>32/40</td>
-                  <td>
-                    <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                    <button class="btn-icon btn-danger"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>ENG105</td>
-                  <td>Technical Writing</td>
-                  <td>
-                    <div class="user-avatar small">
-                      <img src="https://ui-avatars.com/api/?name=Prof+Williams&background=random" alt="Prof. Williams" />
-                      Prof. Williams
-                    </div>
-                  </td>
-                  <td>Fri 09:00 - 12:00</td>
-                  <td>28/30</td>
-                  <td>
-                    <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                    <button class="btn-icon btn-danger"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody></tbody>
             </table>
+          </div>
+          <div class="table-footer">
+            <div class="pagination-info">Showing 1 to 3 of many entries</div>
+            <div class="pagination-controls">
+              <button class="btn-icon">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="btn-icon active">1</button>
+              <button class="btn-icon">2</button>
+              <button class="btn-icon">3</button>
+              <button class="btn-icon">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
           </div>
         </section>
 
@@ -275,13 +242,13 @@
           <div class="section-header">
             <h3><i class="fas fa-chart-bar"></i> Enrollment Reports</h3>
             <div class="btn-group">
-              <button class="btn btn-primary">
+              <button class="btn btn-primary" onclick="generateReport()">
                 <i class="fas fa-file-alt"></i> Generate Report
               </button>
-              <button class="btn btn-secondary">
+              <button class="btn btn-secondary" onclick="exportCSV()">
                 <i class="fas fa-file-csv"></i> Export CSV
               </button>
-              <button class="btn btn-secondary">
+              <button class="btn btn-secondary" onclick="exportPDF()">
                 <i class="fas fa-file-pdf"></i> Export PDF
               </button>
             </div>
@@ -294,19 +261,15 @@
             <div class="report-summary">
               <div class="summary-card">
                 <h4>Top Courses</h4>
-                <ul>
-                  <li>Introduction to Computer Science (45 students)</li>
-                  <li>Data Structures (38 students)</li>
-                  <li>Web Development (35 students)</li>
-                </ul>
+                <ul id="topCoursesList"></ul>
               </div>
               <div class="summary-card">
                 <h4>Recent Enrollments</h4>
-                <ul>
-                  <li>Alice Brown - CSE101 (Today)</li>
-                  <li>Bob Wilson - MTH202 (Yesterday)</li>
-                  <li>Carol Davis - ENG105 (Yesterday)</li>
-                </ul>
+                <ul id="recentEnrollmentsList"></ul>
+                <div
+                  class="pagination-controls"
+                  id="recentEnrollmentsPagination"
+                ></div>
               </div>
             </div>
           </div>
@@ -314,7 +277,9 @@
       </main>
 
       <footer>
-        <p>&copy; 2025 Online Enrollment Management System. All rights reserved.</p>
+        <p>
+          &copy; 2025 Online Enrollment Management System. All rights reserved.
+        </p>
         <div class="footer-links">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
@@ -324,42 +289,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/scripts/main.js"></script>
-    <script>
-      // Sample chart initialization
-      document.addEventListener('DOMContentLoaded', function() {
-        const ctx = document.getElementById('enrollmentChart').getContext('2d');
-        const enrollmentChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-              label: 'Enrollments',
-              data: [120, 190, 170, 220, 180, 250],
-              backgroundColor: '#6366f1',
-              borderColor: '#4f46e5',
-              borderWidth: 1
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'top',
-              },
-              title: {
-                display: true,
-                text: 'Monthly Enrollment Trends'
-              }
-            },
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-      });
-    </script>
+    <script src="scripts/admin.js"></script>
   </body>
 </html>
