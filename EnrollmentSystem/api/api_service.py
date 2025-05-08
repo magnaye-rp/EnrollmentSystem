@@ -15,7 +15,7 @@ def get_db_connection():
             user='root',
             password='',
             database='EnrollmentSystem',
-           # port=3308
+            port=3308
         )
         return mydb
     except mysql.connector.Error as err:
@@ -33,7 +33,7 @@ def student_login():
         return jsonify({"message": "Invalid request data!"}), 400
 
     email = data['email']
-    password = hash_password(data['password'])
+    password_hashed = hash_password(data['password'])
 
     db = get_db_connection()
     if db is None:
@@ -41,18 +41,26 @@ def student_login():
 
     cursor = db.cursor()
     try:
-        cursor.execute("SELECT student_id, student_name FROM students WHERE email = %s AND password = %s", (email, password))
+        cursor.execute(
+            "SELECT student_id, student_name FROM students WHERE email = %s AND password = %s",
+            (email, password_hashed)
+        )
         user = cursor.fetchone()
 
         if user:
-            db.commit()
+            # No need for db.commit() on SELECT
             cursor.close()
             db.close()
-            return jsonify({"message": "Login successful!", "user_id": user[0], "user_name": user[1]}), 200
+            return jsonify({
+                "message": "Login successful!",
+                "user_id": user[0],
+                "user_name": user[1]
+            }), 200
         else:
             cursor.close()
             db.close()
             return jsonify({"message": "Invalid credentials!"}), 401
+
     except mysql.connector.Error as err:
         print(f"Database query error: {err}")
         cursor.close()
@@ -87,7 +95,7 @@ def enrolled_courses():
 
         cursor.close()
         db.close()
-
+        print(results)
         if results:
             return jsonify({"message": "Data fetched", "data": results}), 200
         else:
@@ -433,6 +441,114 @@ def dashboard_data():
     else:
         return jsonify([])
 
+@app.route('/enrollment_summary', methods=['POST'])
+def enrollment_summary():
+    data = request.get_json()
+
+    if not data or 'student_id' not in data:
+        return jsonify({"message": "Invalid request data!"}), 400
+
+    student_id = data['student_id']
+    db = get_db_connection()
+    if db is None:
+        return jsonify({"message": "Database connection failed!"}), 500
+
+    cursor = db.cursor()
+
+    try:
+        # Total enrolled courses
+        cursor.execute("""
+            SELECT COUNT(*) 
+            FROM enrollments 
+            WHERE student_id = %s
+        """, (student_id,))
+        total_enrolled = cursor.fetchone()[0]
+
+        # Unpaid courses using your stored procedure
+        cursor.callproc('unpaidEnrollments', [student_id])
+
+        unpaid_courses = 0
+        for result in cursor.stored_results():
+            unpaid_courses = result.fetchone()[0]  # Assuming your procedure returns COUNT(*)
+
+        cursor.close()
+        db.close()
+
+        return jsonify({
+            "message": "Summary fetched",
+            "total_enrolled": total_enrolled,
+            "unpaid_courses": unpaid_courses
+        }), 200
+
+    except mysql.connector.Error as err:
+        print(f"Database query error: {err}")
+        cursor.close()
+        db.close()
+        return jsonify({"message": "Database query failed!"}), 500
+
+@app.route('/to_pay', methods=['POST'])
+def listUnpaid():
+    data = request.get_json()
+    student_id = data['student_id']
+    db = get_db_connection()
+    cur = db.cursor()
+    try:
+        cur.callproc('listUnpaid', [student_id])
+        unpaid_courses = []
+        for result in cur.stored_results():
+            unpaid_courses = result.fetchall()
+        courses_list = [
+            {
+                "enrollment_id": course[0],
+                "course_name": course[1],
+                "enrollment_date": course[2]
+            }
+            for course in unpaid_courses
+        ]
+        return jsonify({
+            'status': 'success',
+            'unpaid_courses': courses_list
+        }), 200
+
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+    finally:
+        cur.close()
+        db.close()
+
+@app.route('/submit_payment', methods=['POST'])
+def submit_payment():
+    data = request.form
+
+    # Extract the payment data
+    enrollment_id = data['enrollment_id']
+    amount = data['amount']
+
+    # Store the payment in the database
+    db = get_db_connection()
+    cur = db.cursor()
+
+    try:
+        # Assuming you have a payment table to insert the payment record
+        cur.execute("""
+            INSERT INTO payments (enrollment_id, amount, payment_date)
+            VALUES (%s, %s, CURDATE())
+        """, (enrollment_id, amount))
+        db.commit()
+
+        return jsonify({"status": "success", "message": "Payment processed successfully!"})
+
+    except Exception as e:
+        db.rollback()  # In case of error, rollback the transaction
+        return jsonify({"status": "error", "message": str(e)})
+
+    finally:
+        cur.close()
+        db.close()
 
 def serialize_row(row):
     serialized = {}
@@ -454,13 +570,13 @@ def serialize_row(row):
 @app.route('/add_student', methods=['POST'])
 def add_student():
     data = request.get_json()
-    
+
     if not data or 'name' not in data or 'email' not in data or 'password' not in data:
         return jsonify({"success": False, "message": "Missing required fields!"}), 400
 
     hashed_password = hash_password(data['password'])
     raw_password = data['password']
-    
+
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -470,7 +586,7 @@ def add_student():
             (data['name'], data['email'], hashed_password, raw_password)
         )
         conn.commit()
-        
+
         return jsonify({
             "success": True,
             "message": "Student added successfully!"
@@ -489,25 +605,25 @@ def add_student():
 @app.route('/add_course', methods=['POST'])
 def add_course():
     data = request.get_json()
-    
+
     if not data or 'course_name' not in data or 'schedule_time' not in data or 'schedule_day' not in data or 'capacity' not in data:
         return jsonify({"success": False, "message": "Missing required fields!"}), 400
-    
+
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        
+
         # Convert time string to MySQL TIME format
         time_parts = data['schedule_time'].split(':')
         if len(time_parts) < 2:
             return jsonify({"success": False, "message": "Invalid time format"}), 400
-            
+
         cursor.execute(
             "INSERT INTO courses (course_name, schedule_time, schedule_day, capacity) VALUES (%s, %s, %s, %s)",
             (data['course_name'], data['schedule_time'], data['schedule_day'], data['capacity'])
         )
         conn.commit()
-        
+
         return jsonify({
             "success": True,
             "message": "Course added successfully!"
@@ -515,7 +631,7 @@ def add_course():
 
     except mysql.connector.Error as err:
         error_message = str(err)
-        
+
         return jsonify({
             "success": False,
             "message": f"Database error: {error_message}"
@@ -525,6 +641,7 @@ def add_course():
             cursor.close()
             conn.close()
 
+
 if __name__ == '__main__':
     app.run(debug=True)
-    
+

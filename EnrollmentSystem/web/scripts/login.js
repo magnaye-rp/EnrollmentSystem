@@ -38,7 +38,15 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
           if (role === "admin") {
             window.location.href = "admindashboard.html";
           } else if (role === "student") {
-            window.location.href = "studentdashboard.html"; // Assuming you have a student dashboard
+            const studentId = data.user_id;
+            const studentName = data.user_name;
+
+            document.cookie = `studentId=${studentId}; path=/;`;
+            document.cookie = `studentName=${studentName}; path=/;`;
+
+            setTimeout(() => {
+              window.location.href = "studentdashboard.html";
+            }, 100);
           }
         } else {
           // Show error message
