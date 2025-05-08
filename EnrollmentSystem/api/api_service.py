@@ -520,7 +520,6 @@ def listUnpaid():
         cur.close()
         db.close()
 
-
 @app.route('/submit_payment', methods=['POST'])
 def submit_payment():
     data = request.form
@@ -551,7 +550,6 @@ def submit_payment():
         cur.close()
         db.close()
 
-
 def serialize_row(row):
     serialized = {}
     for key, value in row.items():
@@ -568,5 +566,82 @@ def serialize_row(row):
         else:
             serialized[key] = value
     return serialized
+
+@app.route('/add_student', methods=['POST'])
+def add_student():
+    data = request.get_json()
+
+    if not data or 'name' not in data or 'email' not in data or 'password' not in data:
+        return jsonify({"success": False, "message": "Missing required fields!"}), 400
+
+    hashed_password = hash_password(data['password'])
+    raw_password = data['password']
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "INSERT INTO students (student_name, email, password, pw) VALUES (%s, %s, %s, %s)",
+            (data['name'], data['email'], hashed_password, raw_password)
+        )
+        conn.commit()
+
+        return jsonify({
+            "success": True,
+            "message": "Student added successfully!"
+        }), 200
+
+    except mysql.connector.Error as err:
+        return jsonify({
+            "success": False,
+            "message": "Database error occurred"
+        }), 500
+    finally:
+        if 'conn' in locals() and conn.is_connected():
+            cursor.close()
+            conn.close()
+
+@app.route('/add_course', methods=['POST'])
+def add_course():
+    data = request.get_json()
+
+    if not data or 'course_name' not in data or 'schedule_time' not in data or 'schedule_day' not in data or 'capacity' not in data:
+        return jsonify({"success": False, "message": "Missing required fields!"}), 400
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Convert time string to MySQL TIME format
+        time_parts = data['schedule_time'].split(':')
+        if len(time_parts) < 2:
+            return jsonify({"success": False, "message": "Invalid time format"}), 400
+
+        cursor.execute(
+            "INSERT INTO courses (course_name, schedule_time, schedule_day, capacity) VALUES (%s, %s, %s, %s)",
+            (data['course_name'], data['schedule_time'], data['schedule_day'], data['capacity'])
+        )
+        conn.commit()
+
+        return jsonify({
+            "success": True,
+            "message": "Course added successfully!"
+        }), 200
+
+    except mysql.connector.Error as err:
+        error_message = str(err)
+
+        return jsonify({
+            "success": False,
+            "message": f"Database error: {error_message}"
+        }), 500
+    finally:
+        if 'conn' in locals() and conn.is_connected():
+            cursor.close()
+            conn.close()
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+
