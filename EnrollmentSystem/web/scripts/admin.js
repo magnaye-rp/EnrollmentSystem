@@ -159,9 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "#userManagement .section-header .btn-primary"
   );
   if (addStudentButton) {
-    addStudentButton.addEventListener("click", () => {
-      alert("Implement Add New Student functionality");
-    });
+    addStudentButton.addEventListener("click", showAddStudentModal);
   }
 
   // Event delegation for edit and delete buttons (remains the same)
@@ -327,9 +325,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "#courseManagement .section-header .btn-primary"
   );
   if (addCourseButton) {
-    addCourseButton.addEventListener("click", () => {
-      alert("Implement Add New Course functionality");
-    });
+    addCourseButton.addEventListener("click", showAddCourseModal);
   }
 
   tableBody.addEventListener("click", function (event) {
@@ -496,5 +492,127 @@ function exportPDF() {
   alert("Implement Export PDF functionality");
 }
 
-// You would use a charting library (like Chart.js) here to fetch 'monthly_trend'
-// data and render the chart on the <canvas> element.
+function showAddStudentModal() {
+  const modal = document.getElementById("addStudentModal");
+  modal.style.display = "flex";
+  
+  setupModalCloseHandlers(modal);
+  setupStudentFormSubmission(modal);
+}
+
+function setupModalCloseHandlers(modal) {
+  const closeModal = () => modal.style.display = "none";
+  
+  document.querySelectorAll(".close-modal").forEach(btn => {
+    btn.addEventListener("click", closeModal);
+  });
+  
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+}
+
+function setupStudentFormSubmission(modal) {
+  const form = document.getElementById("addStudentForm");
+  
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    const studentData = {
+      name: document.getElementById("studentName").value,
+      email: document.getElementById("studentEmail").value,
+      password: document.getElementById("studentPassword").value,
+    };
+
+    fetch("http://localhost:5000/add_student", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(studentData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          //alert("Student added successfully!");
+          showTimedAlert("Student added successfully!", 3000);
+          modal.style.display = "none";
+          form.reset();
+          loadUsers(currentPage); // Refresh the table
+        } else {
+          alert("Error: " + (data.message || "Failed to add student"));
+        }
+      })
+      if (!error.message.includes("200")) {
+        alert("Error adding student. Please try again.");
+      }
+  });
+}
+
+function showTimedAlert(message, delay) {
+  const alertBox = document.createElement("div");
+  alertBox.textContent = message;
+  alertBox.style.position = "fixed";
+  alertBox.style.top = "20px";
+  alertBox.style.left = "50%";
+  alertBox.style.transform = "translateX(-50%)";
+  alertBox.style.padding = "10px 20px";
+  alertBox.style.background = "#1f2937";
+  alertBox.style.color = "white";
+  alertBox.style.borderRadius = "4px";
+  alertBox.style.zIndex = "1000";
+  alertBox.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
+  
+  document.body.appendChild(alertBox);
+
+  setTimeout(() => {
+    alertBox.style.opacity = "0";
+    setTimeout(() => alertBox.remove(), 300); // Fade-out animation
+  }, delay);
+}
+
+function showAddCourseModal() {
+  const modal = document.getElementById("addCourseModal");
+  modal.style.display = "flex";
+
+  setupModalCloseHandlers(modal);
+  setupCourseFormSubmission(modal);
+}
+
+function setupCourseFormSubmission(modal) {
+  const form = document.getElementById("addCourseForm");
+  
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    const courseData = {
+      course_name: document.getElementById("courseName").value,
+      schedule_time: document.getElementById("courseTime").value,
+      schedule_day: document.getElementById("courseDay").value,
+      capacity: parseInt(document.getElementById("courseCapacity").value)
+    };
+
+    fetch("http://localhost:5000/add_course", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(courseData),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        showTimedAlert("Course added successfully!", 3000);
+        modal.style.display = "none";
+        form.reset();
+        loadCourses(currentPage); 
+      } else {
+        alert("Error: " + (data.message || "Failed to add course"));
+      }
+    })
+    if (!error.message.includes("200")) {
+      alert("Error adding student. Please try again.");
+    }
+  });
+}
+
