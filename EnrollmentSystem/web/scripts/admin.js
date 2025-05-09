@@ -481,32 +481,39 @@ async function loadMonthlyEnrollmentTrend() {
 }
 
 function generateReport() {
-  alert("Implement Generate Report functionality");
+  loadTopCourses();
+  loadRecentEnrollments(1);
+  loadMonthlyEnrollmentTrend();
+  alert("Report generated!");
+  location.reload();
+  href = "#enrollmentReports";
 }
 
 function exportCSV() {
-  alert("Implement Export CSV functionality");
+  exportCSV();
+  alert("Exported CSV");
 }
 
 function exportPDF() {
-  alert("Implement Export PDF functionality");
+  exportPDF();
+  alert("Exported PDF");
 }
 
 function showAddStudentModal() {
   const modal = document.getElementById("addStudentModal");
   modal.style.display = "flex";
-  
+
   setupModalCloseHandlers(modal);
   setupStudentFormSubmission(modal);
 }
 
 function setupModalCloseHandlers(modal) {
-  const closeModal = () => modal.style.display = "none";
-  
-  document.querySelectorAll(".close-modal").forEach(btn => {
+  const closeModal = () => (modal.style.display = "none");
+
+  document.querySelectorAll(".close-modal").forEach((btn) => {
     btn.addEventListener("click", closeModal);
   });
-  
+
   window.addEventListener("click", (e) => {
     if (e.target === modal) closeModal();
   });
@@ -514,10 +521,10 @@ function setupModalCloseHandlers(modal) {
 
 function setupStudentFormSubmission(modal) {
   const form = document.getElementById("addStudentForm");
-  
-  form.addEventListener("submit", function(e) {
+
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
-    
+
     const studentData = {
       name: document.getElementById("studentName").value,
       email: document.getElementById("studentEmail").value,
@@ -531,8 +538,8 @@ function setupStudentFormSubmission(modal) {
       },
       body: JSON.stringify(studentData),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.success) {
           //alert("Student added successfully!");
           showTimedAlert("Student added successfully!", 3000);
@@ -542,10 +549,10 @@ function setupStudentFormSubmission(modal) {
         } else {
           alert("Error: " + (data.message || "Failed to add student"));
         }
-      })
-      if (!error.message.includes("200")) {
-        alert("Error adding student. Please try again.");
-      }
+      });
+    if (!error.message.includes("200")) {
+      alert("Error adding student. Please try again.");
+    }
   });
 }
 
@@ -562,7 +569,7 @@ function showTimedAlert(message, delay) {
   alertBox.style.borderRadius = "4px";
   alertBox.style.zIndex = "1000";
   alertBox.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
-  
+
   document.body.appendChild(alertBox);
 
   setTimeout(() => {
@@ -581,15 +588,15 @@ function showAddCourseModal() {
 
 function setupCourseFormSubmission(modal) {
   const form = document.getElementById("addCourseForm");
-  
-  form.addEventListener("submit", function(e) {
+
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
-    
+
     const courseData = {
       course_name: document.getElementById("courseName").value,
       schedule_time: document.getElementById("courseTime").value,
       schedule_day: document.getElementById("courseDay").value,
-      capacity: parseInt(document.getElementById("courseCapacity").value)
+      capacity: parseInt(document.getElementById("courseCapacity").value),
     };
 
     fetch("http://localhost:5000/add_course", {
@@ -599,20 +606,62 @@ function setupCourseFormSubmission(modal) {
       },
       body: JSON.stringify(courseData),
     })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        showTimedAlert("Course added successfully!", 3000);
-        modal.style.display = "none";
-        form.reset();
-        loadCourses(currentPage); 
-      } else {
-        alert("Error: " + (data.message || "Failed to add course"));
-      }
-    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          showTimedAlert("Course added successfully!", 3000);
+          modal.style.display = "none";
+          form.reset();
+          loadCourses(currentPage);
+        } else {
+          alert("Error: " + (data.message || "Failed to add course"));
+        }
+      });
     if (!error.message.includes("200")) {
       alert("Error adding student. Please try again.");
     }
   });
 }
 
+async function exportCSV() {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/analytics/export?format=csv"
+    );
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "enrollment_report.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Error exporting CSV:", error);
+    alert("Failed to export CSV.");
+  }
+}
+async function exportPDF() {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/analytics/export?format=pdf"
+    );
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "enrollment_report.pdf";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Error exporting PDF:", error);
+    alert("Failed to export PDF.");
+  }
+}

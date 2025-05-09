@@ -1,57 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registration - Course Enrollment</title>
-    <link rel="stylesheet" href="styles/main.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
     <div class="form-container">
-        <div class="form-title">
-            <h2>Create Your Account</h2>
-            <p>Fill in the details below to register for the student portal.</p>
+      <div class="form-title">
+        <h2>Create Your Account</h2>
+        <p>Fill in the details below to register for the student portal.</p>
+      </div>
+      <form id="registrationForm">
+        <!-- Full Name Field -->
+        <div class="input-group">
+          <label for="fullName">Full Name:</label>
+          <input type="text" id="fullName" name="fullName" required />
         </div>
-        <form id="registrationForm">
-            <!-- Role Selection -->
-            <div class="role-selection">
-                <label for="role">Select Role:</label>
-                <select id="role" name="role" required>
-                    <option value="student">Student</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
-            <!-- Full Name Field -->
-            <div class="input-group">
-                <label for="fullName">Full Name:</label>
-                <input type="text" id="fullName" name="fullName" required>
-            </div>
-            <!-- Email Field -->
-            <div class="input-group">
-                <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <!-- Username Field -->
-            <div class="input-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <!-- Password Field -->
-            <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <!-- Confirm Password Field -->
-            <div class="input-group">
-                <label for="confirmPassword">Confirm Password:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
-            </div>
-            <!-- Register Button -->
-            <button type="submit" class="submit-button">Register</button>
-        </form>
-        <div class="switch-form">
-            <p>Already have an account? <a href="login.html">Login here</a></p>
+        <!-- Email Field -->
+        <div class="input-group">
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" name="email" required />
         </div>
+
+        <!-- Password Field -->
+        <div class="input-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <!-- Confirm Password Field -->
+        <div class="input-group">
+          <label for="confirmPassword">Confirm Password:</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            required
+          />
+        </div>
+        <!-- Register Button -->
+        <button id="submit" type="submit" class="submit-button">
+          Register
+        </button>
+      </form>
+      <div class="switch-form">
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+      </div>
     </div>
-</body>
+    <script src="scripts/regis.js"></script>
+  </body>
 </html>

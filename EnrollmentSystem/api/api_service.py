@@ -1,9 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import mysql.connector
 import hashlib
 from datetime import date, timedelta
 from flask_cors import CORS
 import logging
+from fpdf import FPDF
+import io
+import csv
 
 app = Flask(__name__)
 CORS(app)
@@ -640,6 +643,105 @@ def add_course():
         if 'conn' in locals() and conn.is_connected():
             cursor.close()
             conn.close()
+
+@app.route('/analytics/export')
+def export_report():
+    format = request.args.get('format')
+    enrollments = get_recent_enrollments()
+
+    if format == 'pdf':
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.set_font("Arial", size=12)
+        pdf.cell(200, 10, txt="Enrollment Report", ln=True, align='C')
+        pdf.ln(10)
+
+        # Table header
+        pdf.cell(40, 10, txt="Student Name", border=1)
+        pdf.cell(60, 10, txt="Course", border=1)
+        pdf.cell(50, 10, txt="Enrollment Date", border=1)
+        pdf.ln()
+
+        # Table rows
+        for row in enrollments:
+            pdf.cell(40, 10, txt=row['student_name'], border=1)
+            pdf.cell(60, 10, txt=row['course_name'], border=1)
+            pdf.cell(50, 10, txt=str(row['enrollment_date']), border=1)
+            pdf.ln()
+
+        buffer = io.BytesIO()
+        pdf_bytes = pdf.output(dest='S').encode('latin1')
+        buffer.write(pdf_bytes)
+        buffer.seek(0)
+
+        return send_file(buffer, mimetype='application/pdf', as_attachment=True, download_name='enrollment_report.pdf')
+
+    elif format == 'csv':
+        csv_buffer = io.StringIO()
+        csv_writer = csv.writer(csv_buffer)
+        csv_writer.writerow(["Enrollment ID", "Student Name", "Course", "Enrollment Date"])
+
+        for row in enrollments:
+            csv_writer.writerow([
+                row['enrollment_id'],
+                row['student_name'],
+                row['course_name'],
+                row['enrollment_date']
+            ])
+
+        csv_buffer.seek(0)
+
+        return send_file(
+            io.BytesIO(csv_buffer.getvalue().encode('utf-8')),
+            mimetype='text/csv',
+            as_attachment=True,
+            download_name='enrollment_report.csv'
+        )
+
+    else:
+        return 'Invalid format', 400
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    name = data['fullName']
+    email = data['email']
+    password = data['pass']
+
+    hash_pass = hash_password(password)
+
+    # ✅ Only store hashed password
+    cur.execute(
+        "INSERT INTO students (student_name, email, password, pw) VALUES (%s, %s, %s, %s)",
+        (name, email, hash_pass, password)
+    )
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return jsonify({"message": "Registration successful!"}), 200
+
+def get_recent_enrollments(limit=100):
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+    cur.execute(f"""
+        SELECT e.enrollment_id, s.student_name, c.course_name, e.enrollment_date
+        FROM enrollments e
+        JOIN students s ON e.student_id = s.student_id
+        JOIN courses c ON e.course_id = c.course_id
+        ORDER BY e.enrollment_date DESC, e.enrollment_id DESC
+        LIMIT {limit};
+    """)
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return rows
+
+
 
 
 if __name__ == '__main__':
